@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResizeX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Prevent body scrolling */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        #main-container {
+            position: relative; /* Ensure relative positioning */
+            display: flex;
+            flex-direction: column;
+            max-width: 90vw; /* Prevent content from overflowing */
+            max-height: 90vh; /* Prevent content from overflowing */
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: 1px solid #e2e8f0; /* Tailwind's border-gray-200 */
+            border-radius: 0.75rem; /* Tailwind's rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind's shadow-lg */
+            overflow: hidden; /* Prevent scrolling inside container */
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        /* Light theme styles */
+        .light-theme {
+            background-color: #f7fafc; /* Tailwind's bg-gray-100 */
+            color: #1a202c; /* Tailwind's text-gray-900 */
+        }
+        .light-theme #main-container {
+            background: white;
+            border-color: #e2e8f0; /* Tailwind's border-gray-200 */
+        }
+        .light-theme input {
+            border-color: #e2e8f0; /* Tailwind's border-gray-200 */
+            background-color: white;
+            color: #1a202c; /* Tailwind's text-gray-900 */
+        }
+        /* Dark theme styles */
+        .dark-theme {
+            background-color: #1a202c; /* Tailwind's bg-gray-900 */
+            color: #f7fafc; /* Tailwind's text-gray-100 */
+        }
+        .dark-theme #main-container {
+            background: #2d3748; /* Tailwind's bg-gray-800 */
+            border-color: #4a5568; /* Tailwind's border-gray-600 */
+        }
+        .dark-theme input {
+            border-color: #4a5568; /* Tailwind's border-gray-600 */
+            background-color: #2d3748; /* Tailwind's bg-gray-800 */
+            color: #f7fafc; /* Tailwind's text-gray-100 */
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div id="main-container" class="flex flex-col items-center justify-center">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" aria-label="Toggle theme" class="absolute top-4 right-4 p-2 bg-teal-500 text-white rounded-full shadow-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300 ease-in-out">
+            🌙
+        </button>
+        <!-- Main Title -->
+        <h1 class="text-4xl font-bold mb-8 text-center text-teal-600">Upload Your Image</h1>
+        <!-- Upload Form -->
+        <form action="/upload" enctype="multipart/form-data" method="post" class="space-y-6 w-full max-w-md">
+            <input name="file" type="file" accept="image/*" required class="block w-full text-sm border rounded-lg focus:outline-none focus:ring-2 transition duration-300 ease-in-out">
+            <input type="submit" value="Upload" class="w-full py-3 px-6 bg-teal-500 text-white rounded-lg shadow-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300 ease-in-out">
+        </form>
+    </div>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Load saved theme from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'light-theme';
+        body.classList.add(savedTheme);
+
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.textContent = '🌕'; // Change icon to sun for dark theme
+                localStorage.setItem('theme', 'dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.textContent = '🌙'; // Change icon to moon for light theme
+                localStorage.setItem('theme', 'light-theme');
+            }
+        });
+    </script>
+</body>
+</html>
