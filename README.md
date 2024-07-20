@@ -2,5 +2,5 @@
 
 <h2>Installation/Prerequisites</h2>
 
-<code>Create venv using "python -m venv venv"</code>
+<code>Create venv using "python -m venv venv"</code><br>
 <code>Install required packages using "pip install -r requirements.txt"</code>
